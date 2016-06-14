@@ -47,6 +47,7 @@ export class MyApp {
       var uuid = 'B9407F30-F5F8-466E-AFF9-25556B57FE6D'; //Purple
       var identifier = 'Purple iBeacon';
       var minor = 7181;
+      //var minor = 9999;
       var major = 44956;
       var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
 

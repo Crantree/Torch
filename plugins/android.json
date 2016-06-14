@@ -24,6 +24,9 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.torch903339"
+        },
+        "com.unarin.cordova.beacon": {
+            "PACKAGE_NAME": "com.ionicframework.torch903339"
         }
     },
     "dependent_plugins": {}

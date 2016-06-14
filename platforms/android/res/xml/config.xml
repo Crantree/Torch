@@ -20,6 +20,9 @@
         <param name="android-package" value="io.ionic.keyboard.IonicKeyboard" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="LocationManager">
+        <param name="android-package" value="com.unarin.cordova.beacon.LocationManager" />
+    </feature>
     <allow-intent href="market:*" />
     <name>Torch</name>
     <description>An Ionic Framework and Cordova project.</description>

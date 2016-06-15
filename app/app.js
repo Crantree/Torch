@@ -12,6 +12,16 @@ export class MyApp {
   static get parameters() {
     return [[Platform]];
   }
+  
+  static beaconPurple() {
+      var uuid = 'B9407F30-F5F8-466E-AFF9-25556B57FE6D'; //Purple
+      var identifier = 'Purple iBeacon';
+      var minor = 7181;
+      //var minor = 9999;
+      var major = 44956;
+      var beacon = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
+      return beacon;
+  }
 
   constructor(platform) {
     //this.rootPage = TabsPage;
@@ -19,47 +29,99 @@ export class MyApp {
     //this.logToDom('Hello world AA');
 
     platform.ready().then(() => {
-      
-      
-
 
       var delegate = new cordova.plugins.locationManager.Delegate();
-
-
-      delegate.didDetermineStateForRegion = function (pluginResult) {
-
-          console.log('[DOM] didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
-
-          cordova.plugins.locationManager.appendToDeviceLog('[DOM] didDetermineStateForRegion: '
-              + JSON.stringify(pluginResult));
+        
+      delegate.didEnterRegion = function(result) {
+          console.log('didEnterRegion: '+ JSON.stringify(result.region));
       };
 
-      delegate.didStartMonitoringForRegion = function (pluginResult) {
-          console.log('didStartMonitoringForRegion:', pluginResult);
-
-          //logToDom('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
+      delegate.didExitRegion = function(result) {
+          console.log('didEnterRegion: '+ JSON.stringify(result.region));
       };
 
-      delegate.didRangeBeaconsInRegion = function (pluginResult) {
-          console.log('[DOM] didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
+      delegate.didDetermineStateForRegion = function(result) {
+          console.log('didDetermineStateForRegion: '+ JSON.stringify(result));
       };
 
-      var uuid = 'B9407F30-F5F8-466E-AFF9-25556B57FE6D'; //Purple
-      var identifier = 'Purple iBeacon';
-      var minor = 7181;
-      //var minor = 9999;
-      var major = 44956;
-      var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
+      delegate.didRangeBeaconsInRegion = function(result) {
+          console.log('didRangeBeaconsInRegion: '+ JSON.stringify(result.region));
+      };
+
+      delegate.didStartMonitoringForRegion = function(result) {
+        console.log('didStartMonitoringForRegion: '+ JSON.stringify(result.region));
+      };
 
       cordova.plugins.locationManager.setDelegate(delegate);
-
+      
       // required in iOS 8+
       cordova.plugins.locationManager.requestWhenInUseAuthorization(); 
       // or cordova.plugins.locationManager.requestAlwaysAuthorization()
 
-      cordova.plugins.locationManager.startMonitoringForRegion(beaconRegion)
+      //var beaconRegion = this.beaconPurple();
+      
+      var uuidA = 'B9407F30-F5F8-466E-AFF9-25556B57FE6D'; //Purple
+      var identifierA = 'Purple iBeacon';
+      var majorA = 44956;
+      var minorA = 7181;
+      var beaconA = new cordova.plugins.locationManager.BeaconRegion(identifierA, uuidA, majorA, minorA);
+      
+      
+      var uuidB = 'B9407F30-F5F8-466E-AFF9-25556B57FE6D'; //Green
+      var identifierB = 'Green iBeacon';
+      var majorB = 64648;
+      var minorB = 3710;
+      var beaconB = new cordova.plugins.locationManager.BeaconRegion(identifierB, uuidB, majorB, minorB);
+      
+      
+      var uuidC = 'B9407F30-F5F8-466E-AFF9-25556B57FE6D'; //Blue
+      var identifierC = 'Blue iBeacon';
+      var majorC = 18413;
+      var minorC = 41133;
+      var beaconC = new cordova.plugins.locationManager.BeaconRegion(identifierC, uuidC, majorC, minorC);
+      
+
+    var beacons = [beaconA, beaconB, beaconC];
+    for (var i = 0; i < beacons.length; i++) {
+        var beacon = beacons[i];
+        cordova.plugins.locationManager.startMonitoringForRegion(beacon);
+        cordova.plugins.locationManager.startRangingBeaconsInRegion(beacon);
+    }
+
+/*
+      cordova.plugins.locationManager.startMonitoringForRegion(beaconA)
           .fail(function(e) { console.error(e); })
-          .done();
+          .done(function()
+          {
+            cordova.plugins.locationManager.stopMonitoringForRegion(beaconA)
+              .fail(function(e) { console.error(e); })
+              .done(function()
+              {
+                setTimeout(function() {
+                  cordova.plugins.locationManager.startMonitoringForRegion(beaconB)
+                      .fail(function(e) { console.error(e); })
+                      .done(function()
+                  {
+                    cordova.plugins.locationManager.stopMonitoringForRegion(beaconB)
+                      .fail(function(e) { console.error(e); })
+                      .done(function()
+                      {
+                          setTimeout(function() {
+                              cordova.plugins.locationManager.startMonitoringForRegion(beaconC)
+                            .fail(function(e) { console.error(e); })
+                            .done(function() 
+                            {
+                              cordova.plugins.locationManager.stopMonitoringForRegion(beaconC)
+                                .fail(function(e) { console.error(e); })
+                                .done(function() { console.log("finished"); });
+                          }, 5000);
+                      });
+                  }, 5000);
+                });
+              });
+            });
+          });
+        */
      
    
   
@@ -70,8 +132,10 @@ export class MyApp {
    });
    
   }
-  
-    logToDom(message) {
+   
+}  
+
+function logToDom(message) {
           var e = document.createElement('label');
           e.innerText = message;
 
@@ -83,7 +147,6 @@ export class MyApp {
 
           window.scrollTo(0, window.document.height);
       };
-}  
 
 
 ionicBootstrap(MyApp)

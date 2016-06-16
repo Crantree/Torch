@@ -20,6 +20,24 @@ tmp/
 temp/
 www/build/
 $RECYCLE.BIN/
+platforms/android
+platforms/ios/*
+platforms/android/*
+platforms/android/build.xml
+platforms/android/local.properties
+platforms/android/gradlew
+platforms/android/gradlew.bat
+platforms/android/gradle
+
+*.mode1v3
+*.perspectivev3
+*.pbxuser
+platforms/ios/build
+
+platforms/android/gen
+platforms/android/out
+
+platforms/android/build
 
 .DS_Store
 Thumbs.db

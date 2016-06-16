@@ -1,0 +1,19 @@
+
+<ion-navbar *navbar>
+  <ion-title>
+    Contact
+  </ion-title>
+</ion-navbar>
+
+<ion-content>
+  <ion-content padding>
+
+  <h1>{{message}}</h1>
+  <ion-list>
+    <ion-list-header class="contact-page-content">Beacons found...</ion-list-header>
+    <ion-item *ngFor="let b of inRange">
+      <ion-icon name="ionic" item-left class="contact-page-content"></ion-icon>
+      {{b.minor}} | {{b.rssi}}  {{b.proximity}}
+    </ion-item>
+  </ion-list>
+</ion-content>

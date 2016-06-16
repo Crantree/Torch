@@ -7,11 +7,17 @@
 
 <ion-content padding>
   <h1>Time: {{time}}</h1>
+  <ion-card *ngFor="let b of inRange">
+    {{b.minor}}, {{b.rssi}}, {{b.proximity}}
+  </ion-card>
+
+
   <ul>
     <li>current region: {{currentRegion}} (just left: {{leftRegion}})</li>
     <li>region: {{region}} with state: {{regionState}}</li>
     <li>didRangeBeaconsInRegion{{didRangeBeaconsInRegion}}</li>
   </ul>
+  <p>{{fullRegion}}</p>
 
   
 

@@ -29,6 +29,8 @@ export class AboutPage {
       this.currentRegion = "???";
       this.leftRegion = "-";
       this.regionState = "";
+      this.fullRegion = "";
+      this.inRange = [];
 
 
       this.time = new Date();  
@@ -67,7 +69,9 @@ export class AboutPage {
       delegate.didRangeBeaconsInRegion = (result) => {
           this.didRangeBeaconsInRegion = result.region.identifier;
           this.region = result.region.identifier;
-          console.log('didRangeBeaconsInRegion: '+ JSON.stringify(result.region));
+          this.fullRegion;
+          this.inRange = result.beacons;
+          console.log('didRangeBeaconsInRegion: '+ JSON.stringify(result));
       };
 
       delegate.didStartMonitoringForRegion = (result) => {
@@ -102,14 +106,20 @@ export class AboutPage {
       var minorC = 41133;
       var beaconC = new cordova.plugins.locationManager.BeaconRegion(identifierC, uuidC, majorC, minorC);
         
+      var uuidD = 'B9407F30-F5F8-466E-AFF9-25556B57FE6D'; //Blue
+      var identifierD = 'Rainbow';
+      var beaconD = new cordova.plugins.locationManager.BeaconRegion(identifierD, uuidD);
+        
 
+    cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconD);
+/*
       var beacons = [beaconB, beaconA, beaconC];
       for (var i = 0; i < beacons.length; i++) {
           var beacon = beacons[i];
           //cordova.plugins.locationManager.startMonitoringForRegion(beacon);
           cordova.plugins.locationManager.startRangingBeaconsInRegion(beacon);
       }
-    
+    */
     
   }
 }

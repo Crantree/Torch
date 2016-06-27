@@ -19,5 +19,15 @@ export class AboutPage {
   didRangeBeaconsInRegion : String;
   beacons = [1, 2, 3];
 */
+
+  constructor() {
+    this.guidelines = [
+      { name: "Difficult Airways Guidelines"},
+      { name: "Intubation Guidelines"},
+      { name: "Catheter Guidelines"},
+      { name: "Beverage Guidelines"}
+      ];
+        
+  }
   
 }

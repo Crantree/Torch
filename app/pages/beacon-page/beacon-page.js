@@ -1,27 +1,20 @@
 import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {NavController, Platform} from 'ionic-angular';
 
 @Component({
   templateUrl: 'build/pages/beacon-page/beacon-page.html'
 })
 export class BeaconPage {
   static get parameters() {
-    return [[NavController]];
+    return [[NavController], [Platform]];
   }
 
-  constructor(_navController) {
+  constructor(_navController, platform) {
       this._navControler = _navController;
       
-      if(window.cordova)
-      {
-        this.message = 'ranging for beacons';
-        this.startBeacons();
-        this.rangeForBeacons();
-      }
-      else {
-        this.message = "beacons not supported";
-      }
-      
+      this.logs = ["111", "222"];
+      this.log('starting beacon page');
+
       this.id = "";
       this.region = "???";
       this.currentRegion = "???";
@@ -29,7 +22,25 @@ export class BeaconPage {
       this.regionState = "";
       this.fullRegion = "";
       this.inRange = [];
+      this.logged = "nothing logged";
+      this.message = "";
+      
+      platform.ready().then(() => {
+        if(window.cordova)
+        {
+          this.message = 'Ranging for beacons:';
+          this.startBeacons();
+          this.rangeForBeacons();
+        }
+        else {
+          this.message = "Beacons not supported";
+        }
+      });
 
+      
+      
+      
+      //this.log("constructor::");
 
       this.time = new Date();  
       setInterval(() => this.time = new Date(), 1000);
@@ -69,6 +80,7 @@ export class BeaconPage {
         
 
     cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconD);
+    this.log("start ranging");
 /*
       var beacons = [beaconB, beaconA, beaconC];
       for (var i = 0; i < beacons.length; i++) {
@@ -79,27 +91,39 @@ export class BeaconPage {
     */
   }
 
+  log(m){
+    //this.logged = this.logged.concat(m); // + "<br/><br/>" + this.logged;
+    //this.logs.push(m);
+    this.logs.splice(0, 0, m);
+    console.log(m);
+  }
+
   startBeacons()
   {
-      
+    this.log("request Authorisation: before");
+    // required in iOS 8+
+      cordova.plugins.locationManager.requestAlwaysAuthorization();
+      //cordova.plugins.locationManager.requestWhenInUseAuthorization(); 
+      // or cordova.plugins.locationManager.requestAlwaysAuthorization()
+      this.log("request Authorisation: after");
       var delegate = new cordova.plugins.locationManager.Delegate();
         
       delegate.didEnterRegion = (result) => {
         this.currentRegion = result.region.identifier;
         this.leftRegion = "-";
-          console.log('didEnterRegion: '+ JSON.stringify(result.region));
+          this.log('didEnterRegion: '+ JSON.stringify(result.region));
       };
 
       delegate.didExitRegion = (result) => {
         //this.currentRegion = "-";
         this.leftRegion = result.region.identifier;
-          console.log('didEnterRegion: '+ JSON.stringify(result.region));
+          this.log('didEnterRegion: '+ JSON.stringify(result.region));
       };
 
       delegate.didDetermineStateForRegion = (result)  =>{
         //this.region = result.region.identifier;
         this.regionState = result.state;
-          console.log('didDetermineStateForRegion: '+ JSON.stringify(result));
+          this.log('didDetermineStateForRegion: '+ JSON.stringify(result));
       };
 
       delegate.didRangeBeaconsInRegion = (result) => {
@@ -107,18 +131,21 @@ export class BeaconPage {
           this.region = result.region.identifier;
           this.fullRegion;
           this.inRange = result.beacons;
-          console.log('didRangeBeaconsInRegion: '+ JSON.stringify(result));
+          this.log('didRangeBeaconsInRegion: '+ JSON.stringify(result));
       };
 
       delegate.didStartMonitoringForRegion = (result) => {
-        console.log('didStartMonitoringForRegion: '+ JSON.stringify(result.region));
+        this.log('didStartMonitoringForRegion: '+ JSON.stringify(result.region));
       };
 
+      delegate.didChangeAuthorizationStatus = (result) =>
+      {
+        this.log('didChangeAuthorizationStatus: '+ JSON.stringify(result));
+      }
+
       cordova.plugins.locationManager.setDelegate(delegate);
+      this.log('set delegate');
       
-      // required in iOS 8+
-      cordova.plugins.locationManager.requestWhenInUseAuthorization(); 
-      // or cordova.plugins.locationManager.requestAlwaysAuthorization()
 
       //var beaconRegion = this.beaconPurple();
       

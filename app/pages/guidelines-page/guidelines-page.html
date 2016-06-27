@@ -1,0 +1,12 @@
+<ion-navbar *navbar>
+  <ion-title>Guidelines</ion-title>
+</ion-navbar>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>Select a guideline.</ion-list-header>
+    <button ion-item text-wrap *ngFor="let g of guidelines"  (click)="selectGuideline(g)">
+      <p>{{g}}</p>
+    </button>
+  </ion-list>
+</ion-content>

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
-import {ScientificFactsPage} from '../scientific-facts-page/scientific-facts-page';
+import {GuidelinesPage} from '../guidelines-page/guidelines-page';
 
 @Component({
   templateUrl: 'build/pages/home-page/home-page.html'
@@ -14,7 +14,7 @@ export class HomePage {
     this._navController = _navController;
   }
 
-  goToFactsPage(){
-    this._navController.push(ScientificFactsPage);
+  goToGuidelinesPage(){
+    this._navController.push(GuidelinesPage);
   }
 }

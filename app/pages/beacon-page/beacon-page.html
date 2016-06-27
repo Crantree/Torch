@@ -14,9 +14,10 @@
       {{b.minor}} | {{b.rssi}}  {{b.proximity}}
     </ion-item>
   </ion-list>
-  <p>
-{{logged}}
-</p>
+  <ion-item> 
+    <ion-label>Use logging?</ion-label>
+    <ion-checkbox [(ngModel)]="canLog" dark checked="false"></ion-checkbox>
+</ion-item>
 
 <ul>
   <li *ngFor="let l of logs">{{l}}</li>

@@ -12,6 +12,7 @@ export class BeaconPage {
   constructor(_navController, platform) {
       this._navControler = _navController;
       
+      this.canLog = false;
       this.logs = ["111", "222"];
       this.log('starting beacon page');
 
@@ -94,8 +95,15 @@ export class BeaconPage {
   log(m){
     //this.logged = this.logged.concat(m); // + "<br/><br/>" + this.logged;
     //this.logs.push(m);
-    this.logs.splice(0, 0, m);
-    console.log(m);
+    if(this.canLog)
+    {
+      if(this.logs && this.logs.length > 5)
+      {
+        this.logs.pop();
+      }
+      this.logs.splice(0, 0, m);
+      console.log(m);
+    }
   }
 
   startBeacons()

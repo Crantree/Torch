@@ -1,9 +1,20 @@
 <ion-navbar *navbar>
-  <ion-title>Selected Guideline</ion-title>
+  <ion-title>{{guideline}}</ion-title>
 </ion-navbar>
 
+<!--
+  <ion-tabs>
+  <ion-tab [root]="guidelineInfo" tabTitle="Summary" tabIcon="information-circle"></ion-tab>
+  <ion-tab [root]="guidelineEquipment" tabTitle="Equipment" tabIcon="heart"></ion-tab>
+  <ion-tab [root]="guidelineContacts" tabTitle="Contacts" tabIcon="contacts"></ion-tab>
+</ion-tabs>
+-->
+
 <ion-content padding>
-  <h2>You've selected:</h2>
-  <p>{{guideline}}</p>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </p>
+  
+  <img src='images/doctor.png'>
   <button (click)="goBack()">Go Back</button>
 </ion-content>

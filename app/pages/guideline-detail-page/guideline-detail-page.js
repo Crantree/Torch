@@ -12,6 +12,9 @@ export class GuidelineDetailPage {
   constructor(_navController, _navParams) {
     this._navController = _navController;
     this._navParams = _navParams;
+    //this.guidelineInfo = GuidelineInfoTab;
+    //this.guidelineEquipment = GuidelineInfoTab;
+    //this.guidelineContacts = GuidelineInfoTab;
   }
 
   ionViewWillEnter(){

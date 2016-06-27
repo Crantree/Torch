@@ -13,7 +13,7 @@ export class BeaconPage {
       this._navControler = _navController;
       
       this.canLog = false;
-      this.logs = ["111", "222"];
+      this.logs = [""];
       this.log('starting beacon page');
 
       this.id = "";
